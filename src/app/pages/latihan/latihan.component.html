@@ -1,0 +1,130 @@
+<div>
+<form [formGroup]="formGroup">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Nim</label>
+        <div class="col-sm-5">
+            <input type="text"
+             formControlName="nim"
+             [className]="formGroup.controls['nim'].hasError('required') 
+                && formGroup.controls['nim'].touched ? 
+                'form-control is-invalid' : 'form-control'"
+             />
+             <div class="invalid-feedback" 
+                *ngIf="formGroup.controls['nim'].hasError('required') 
+                && formGroup.controls['nim'].touched">
+                Nim is required
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Nama</label>
+        <div class="col-sm-10">
+            <input type="text" 
+            [className]="formGroup.controls['nama'].hasError('required') 
+                && formGroup.controls['nama'].touched ? 
+                'form-control is-invalid' : 'form-control'"
+            formControlName="nama">
+            
+            <div class="invalid-feedback" 
+            *ngIf="formGroup.controls['nama'].hasError('required') 
+            && formGroup.controls['nama'].touched">
+            Nama is required
+        </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Web Url</label>
+        <div class="col-sm-10">
+            <input type="text"  class="form-control" formControlName="weburl">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Kampus</label>
+        <div class="col-sm-10">
+            <input type="text"  class="form-control" formControlName="kampus">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Type</label>
+        <div class="col-sm-10">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="type"  value="0" formControlName="type">
+                <label class="form-check-label">Data UTS</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="type"  value="1" formControlName="type">
+                <label class="form-check-label">Data UAS</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">&nbsp;</label>
+        <div class="col-sm-10">
+            <button 
+                type="button" 
+                *ngIf="!isEdit"
+                class="btn btn-primary" 
+                (click)="onSaveData()">Save Data
+            </button>
+
+            <button type="button" 
+                *ngIf="isEdit"
+                class="btn btn-info" 
+                (click)="onUpdate()">Save Upate
+            </button>
+
+            <button type="button" class="btn btn-danger" style="margin-left: 5px;">Reset</button>
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>NIM</th>
+            <th>NAMA</th>
+            <th>KAMPUS</th>
+            <th>TYPE</th>
+            <th>WEB URL</th>
+            <th>ACTION</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of list">
+            <td>{{item.nim}}</td>
+            <td>{{item.nama}}</td>
+            <td>{{item.kampus}}</td>
+            <td>{{item.type}}</td>
+            <td>{{item.weburl}}</td>
+            <td>
+                <button type="button" 
+                    class="btn btn-sm btn-primary" 
+                    (click)="onEdit(item.id)">
+                    Edit
+                </button>
+
+                <button type="button" 
+                    class="btn btn-sm btn-danger" 
+                    (click)="onDelete(item.id)">
+                    Delete
+                </button>
+            </td> 
+        </tr>
+    </tbody>
+</table>
+
+<ng-template #customLoadingTemplate>
+    <div class="custom-class">
+        <h3>
+            Loading...
+        </h3>
+    </div>
+</ng-template>
+
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+</div>
